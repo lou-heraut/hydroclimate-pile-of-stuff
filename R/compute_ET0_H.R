@@ -68,16 +68,17 @@ get_Delta = function (Tmin, Tmax) {
     return (Delta)
 }
 
-# get_nb_days_in_year = function (date) {
-#     NBD = ifelse(lubridate::leap_year(year(date)), 366, 365)
-#     return (NBD)
-# }
+get_nb_days_in_year = function (date) {
+    NBD = ifelse(lubridate::leap_year(year(date)), 366, 365)
+    return (NBD)
+}
 
 compute_Ra = function (latitude, yearday) {
+    NBD = get_nb_days_in_year(date)
     Gsc = 0.0820
     phi = latitude * pi / 180
-    dr = 1 + 0.033 * cos(2 * pi * yearday / 365)
-    delta = 0.409 * sin(2 * pi * yearday / 365 - 1.39)
+    dr = 1 + 0.033 * cos(2 * pi * yearday / NBD)
+    delta = 0.409 * sin(2 * pi * yearday / NBD - 1.39)
     omega_s = acos(-tan(phi) * tan(delta))
     Ra = (24*60/pi) * Gsc * dr * (omega_s*sin(phi)*sin(delta) +
                                   cos(phi)*cos(delta)*sin(omega_s))
